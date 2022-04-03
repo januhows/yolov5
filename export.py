@@ -342,6 +342,7 @@ def export_coreml(model, im, file, num_boxes, num_classes, labels, conf_thres, i
         LOGGER.info(f'\n{prefix} export failure: {e}')
         return None, None
 
+
 @try_export
 def export_engine(model, im, file, train, half, dynamic, simplify, workspace=4, verbose=False):
     # YOLOv5 TensorRT export https://developer.nvidia.com/tensorrt
