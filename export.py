@@ -337,7 +337,7 @@ def export_coreml(model, im, file, num_boxes, num_classes, labels, conf_thres, i
         ct_model.save(f)
 
         LOGGER.info(f'{prefix} export success, saved as {f} ({file_size(f):.1f} MB)')
-        return ct_model, f
+        return f, ct_model
     except Exception as e:
         LOGGER.info(f'\n{prefix} export failure: {e}')
         return None, None
@@ -640,8 +640,7 @@ def run(
         f[3], _ = export_openvino(model, file, half)
     if coreml:
         nb = shape[1]
-        _, f[4] = export_coreml(model, im, file, nb, nc, names, conf_thres, iou_thres, int8, half)
-
+        f[4], _ = export_coreml(model, im, file, nb, nc, names, conf_thres, iou_thres, int8, half)
     # TensorFlow Exports
     if any((saved_model, pb, tflite, edgetpu, tfjs)):
         if int8 or edgetpu:  # TFLite --int8 bug https://github.com/ultralytics/yolov5/issues/5707
